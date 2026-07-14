@@ -4,3 +4,4 @@ out/
 dev-server.log
 package-lock.json
 start-dev.bat
+.env*.local

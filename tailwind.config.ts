@@ -10,17 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#0F4C75",
-          50: "#E8F0F8",
-          100: "#C5D9EE",
-          200: "#9EBDE0",
-          300: "#6F9ECF",
-          400: "#4B86C2",
-          500: "#0F4C75",
-          600: "#0D3F62",
-          700: "#0A2F4A",
-          800: "#081F32",
-          900: "#04111C",
+          DEFAULT: "#059669",
+          50: "#ECFDF5",
+          100: "#D1FAE5",
+          200: "#A7F3D0",
+          300: "#6EE7B7",
+          400: "#34D399",
+          500: "#10B981",
+          600: "#059669",
+          700: "#047857",
+          800: "#065F46",
+          900: "#064E3B",
         },
         secondary: {
           DEFAULT: "#D35400",
@@ -36,17 +36,17 @@ const config: Config = {
           900: "#5C1E00",
         },
         accent: {
-          DEFAULT: "#F4A261",
-          50: "#FFF8F0",
-          100: "#FFEED9",
-          200: "#FFE0B8",
-          300: "#F4A261",
-          400: "#E88C3A",
-          500: "#D97620",
-          600: "#B85E14",
-          700: "#94480C",
-          800: "#703406",
-          900: "#4C2202",
+          DEFAULT: "#F59E0B",
+          50: "#FFFBEB",
+          100: "#FEF3C7",
+          200: "#FDE68A",
+          300: "#FCD34D",
+          400: "#FBBF24",
+          500: "#F59E0B",
+          600: "#D97706",
+          700: "#B45309",
+          800: "#92400E",
+          900: "#78350F",
         },
         slate: {
           50: "#F8FAFC",
@@ -67,6 +67,8 @@ const config: Config = {
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",
         "slide-up": "slideUp 0.6s ease-out forwards",
+        "float": "float 6s ease-in-out infinite",
+        "pulse-slow": "pulseSlow 8s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -76,6 +78,14 @@ const config: Config = {
         slideUp: {
           "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        pulseSlow: {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "0.8" },
         },
       },
     },

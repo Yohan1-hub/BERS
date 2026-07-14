@@ -39,7 +39,7 @@ export default function TrainingPage() {
   });
 
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <div className="min-h-screen bg-white pt-20 md:pt-32">
       <div className="border-b border-slate-200 bg-white">
         <div className="section-container py-6 sm:py-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

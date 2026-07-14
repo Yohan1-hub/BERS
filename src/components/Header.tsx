@@ -2,122 +2,178 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Globe, GraduationCap } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import Logo from "./Logo";
+import LanguageSelector from "./LanguageSelector";
 
-const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#methodology", label: "Methodology" },
-  { href: "#initiatives", label: "Initiatives" },
-  { href: "/training", label: "Training", isPage: true },
-  { href: "#contact", label: "Contact" },
+const mainLinks = [
+  { label: "Home", href: "#", anchor: true },
+  { label: "About", href: "#about", anchor: true },
+  { label: "Methodology", href: "#methodology", anchor: true },
+  { label: "Services", href: "/services", anchor: false },
+  { label: "Training", href: "/training", anchor: false },
+];
+
+const moreLinks = [
+  { label: "Initiatives", href: "#initiatives", anchor: true },
+  { label: "Courses", href: "/courses", anchor: false },
+  { label: "Portfolio", href: "/portfolio", anchor: false },
+  { label: "Blog", href: "/blog", anchor: false },
+  { label: "Contact", href: "/contact", anchor: false },
+  { label: "Donate", href: "/donations", anchor: false },
 ];
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setMobileOpen(false);
-    const target = document.querySelector(href);
+  const scrollTo = (id: string) => {
+    const target = document.querySelector(id);
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     }
+    setIsOpen(false);
   };
 
   return (
     <header className="fixed left-0 right-0 top-0 z-50 border-b border-slate-100/80 bg-white/95 backdrop-blur-md">
-      <div className="section-container flex h-20 items-center justify-between">
-        <a
-          href="#"
-          className="flex items-center gap-3 text-xl font-bold tracking-tight text-slate-800"
-        >
-          <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-secondary text-sm font-bold text-white shadow-md">
-            B
-          </span>
-          <span className="hidden sm:inline">BERS Institute LLC</span>
-          <span className="sm:hidden">BERS</span>
+      <div className="section-container flex h-20 items-center justify-between md:h-32">
+        <a href="#" className="flex shrink-0 items-center">
+          <Logo className="h-10 w-auto sm:h-12 md:h-20" />
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) =>
-            link.isPage ? (
-              <a
-                key={link.href}
-                href={link.href}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition-colors duration-200 hover:text-primary"
+        <nav className="hidden items-center gap-1 md:flex">
+          {mainLinks.map((link) =>
+            link.anchor ? (
+              <button
+                key={link.label}
+                onClick={() => scrollTo(link.href)}
+                className="rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
               >
-                <GraduationCap className="h-4 w-4" />
                 {link.label}
-              </a>
+              </button>
             ) : (
               <a
-                key={link.href}
+                key={link.label}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-sm font-medium text-slate-500 transition-colors duration-200 hover:text-primary"
+                className="rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
               >
                 {link.label}
               </a>
-            )
+            ),
           )}
-          <a
-            href="#contact"
-            onClick={(e) => handleNavClick(e, "#contact")}
-            className="btn-primary ml-2"
-          >
-            <Globe className="h-4 w-4" />
-            Partner With Us
-          </a>
+
+          {/* More dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setShowMore(!showMore)}
+              className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
+            >
+              More <ChevronDown className="h-3 w-3" />
+            </button>
+            <AnimatePresence>
+              {showMore && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  className="absolute right-0 top-full mt-1 w-40 rounded-xl border border-slate-100 bg-white p-1 shadow-lg"
+                  onMouseLeave={() => setShowMore(false)}
+                >
+                  {moreLinks.map((link) =>
+                    link.anchor ? (
+                      <button
+                        key={link.label}
+                        onClick={() => { scrollTo(link.href); setShowMore(false); }}
+                        className="block w-full rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
+                      >
+                        {link.label}
+                      </button>
+                    ) : (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        className="block rounded-lg px-3 py-2 text-xs font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
+                      >
+                        {link.label}
+                      </a>
+                    ),
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <LanguageSelector />
         </nav>
 
         <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex items-center justify-center rounded-lg p-2 text-slate-500 transition-colors hover:text-primary md:hidden"
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 transition-colors hover:bg-slate-100 md:hidden"
         >
-          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       <AnimatePresence>
-        {mobileOpen && (
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="border-t border-slate-100 bg-white md:hidden"
+            className="overflow-hidden border-t border-slate-100 bg-white md:hidden"
           >
-            <div className="section-container flex flex-col gap-2 pb-6 pt-4">
-              {navLinks.map((link) =>
-                link.isPage ? (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-primary"
+            <div className="section-container space-y-1 py-4">
+              {[...mainLinks, ...moreLinks].map((link) =>
+                link.anchor ? (
+                  <button
+                    key={link.label}
+                    onClick={() => scrollTo(link.href)}
+                    className="block w-full rounded-lg px-4 py-2.5 text-left text-sm font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
                   >
-                    <GraduationCap className="h-4 w-4" />
                     {link.label}
-                  </a>
+                  </button>
                 ) : (
                   <a
-                    key={link.href}
+                    key={link.label}
                     href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className="rounded-lg px-4 py-3 text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-primary"
+                    className="block rounded-lg px-4 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-emerald-50 hover:text-emerald-700"
                   >
                     {link.label}
                   </a>
-                )
+                ),
               )}
-              <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, "#contact")}
-                className="btn-primary mt-2 justify-center"
-              >
-                <Globe className="h-4 w-4" />
-                Partner With Us
-              </a>
+              <div className="border-t border-slate-100 px-4 pt-3">
+                <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">
+                  Translate
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    ["en", "English"],
+                    ["es", "Español"],
+                    ["fr", "Français"],
+                    ["pt", "Português"],
+                    ["ar", "العربية"],
+                    ["zh-CN", "中文"],
+                  ].map(([code, name]) => (
+                    <button
+                      key={code}
+                      onClick={() => {
+                        const sel = document.querySelector(
+                          ".goog-te-combo",
+                        ) as HTMLSelectElement;
+                        if (sel) {
+                          sel.value = code;
+                          sel.dispatchEvent(new Event("change"));
+                        }
+                      }}
+                      className="rounded-md bg-slate-50 px-2 py-1 text-xs text-slate-600 transition-colors hover:bg-amber-50 hover:text-amber-700"
+                    >
+                      {name}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         )}

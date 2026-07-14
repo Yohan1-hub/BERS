@@ -1,0 +1,31 @@
+[
+  {
+    "id": "sample-course",
+    "title": "Introduction to EHSQ Management",
+    "description": "Learn the fundamentals of Environmental, Health, Safety, and Quality management systems. This course covers ISO standards, risk assessment, and compliance frameworks.",
+    "status": "published",
+    "language": "en",
+    "modules": [
+      {
+        "id": "mod-1",
+        "title": "Foundations of EHSQ",
+        "description": "Core concepts and international standards",
+        "lessons": [
+          { "id": "les-1", "title": "What is EHSQ?", "description": "Overview of integrated management systems", "videoUrl": "" },
+          { "id": "les-2", "title": "ISO Standards Overview", "description": "ISO 9001, 14001, 45001 frameworks", "videoUrl": "" }
+        ]
+      },
+      {
+        "id": "mod-2",
+        "title": "Risk Assessment",
+        "description": "Identifying and mitigating workplace hazards",
+        "lessons": [
+          { "id": "les-3", "title": "Hazard Identification", "description": "Systematic approaches to finding risks", "videoUrl": "" },
+          { "id": "les-4", "title": "Control Measures", "description": "Hierarchy of controls", "videoUrl": "" }
+        ]
+      }
+    ],
+    "createdAt": "2025-01-15T00:00:00.000Z",
+    "updatedAt": "2025-06-01T00:00:00.000Z"
+  }
+]
