@@ -4,6 +4,8 @@
 
   var EXAMS = window.RBT_EXAMS || [];
   var CARDS = window.RBT_CARDS || [];
+  var SIGLAS = window.RBT_SIGLAS || [];
+  var TRANS = window.RBT_TRANS || {};
   var GUIDE = window.RBT_GUIDE || "";
   var PASS = 80;
   var LETTERS = ["A", "B", "C", "D"];
@@ -60,6 +62,72 @@
     return String(s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function getTrans(ex, i) {
+    if (!TRANS[ex.id]) return null;
+    var t = TRANS[ex.id][i];
+    return t || null;
+  }
+
+  var SIGLA_MAP = null;
+  function siglaMap() {
+    if (!SIGLA_MAP) {
+      SIGLA_MAP = {};
+      for (var k = 0; k < SIGLAS.length; k++) {
+        if (SIGLAS[k].sigla) SIGLA_MAP[SIGLAS[k].sigla.toLowerCase()] = SIGLAS[k];
+      }
+    }
+    return SIGLA_MAP;
+  }
+
+  function annotate(txt) {
+    var s = esc(txt);
+    var order = SIGLAS.filter(function (x) { return x.sigla; })
+      .sort(function (a, b) { return b.sigla.length - a.sigla.length; });
+    if (!order.length) return s;
+    var map = siglaMap();
+    var parts = [];
+    var seen = {};
+    for (var k = 0; k < order.length; k++) {
+      if (seen[order[k].sigla.toLowerCase()]) continue;
+      seen[order[k].sigla.toLowerCase()] = 1;
+      parts.push(order[k].sigla.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    }
+    var re = new RegExp("(^|[^A-Za-z0-9])(" + parts.join("|") + ")(?=$|[^A-Za-z0-9])", "gi");
+    return s.replace(re, function (m, p1, p2) {
+      var item = map[p2.toLowerCase()];
+      if (!item) return m;
+      var tip = esc(item.en + (item.es && item.es !== item.en ? " — " + item.es : ""));
+      return p1 + "<span class='sigla-hl' title='" + tip + "'>" + p2 + "</span>";
+    });
+  }
+
+  function siglaLegend(txt) {
+    if (!txt) return "";
+    var map = siglaMap();
+    var found = [];
+    var seen = {};
+    var matches = txt.match(/[A-Za-z0-9]+[^ ]{0,2}/g) || [];
+    for (var i = 0; i < matches.length; i++) {
+      if (!map) continue;
+      var key = matches[i].toLowerCase().replace(/[^a-z0-9]/g, "");
+      if (map[key]) {
+        if (!seen[key]) { seen[key] = 1; found.push(map[key]); }
+        continue;
+      }
+      var base = key.replace(/[0-9]+$/, "");
+      if (map[base]) {
+        if (!seen[base]) { seen[base] = 1; found.push(map[base]); }
+      }
+    }
+    if (!found.length) return "";
+    var html = "<div class='sigla-legend'><span class='sigla-legend-t'>Siglas:</span>";
+    for (var k = 0; k < found.length; k++) {
+      html += "<span class='sigla-chip'><b>" + esc(found[k].sigla) + "</b> " +
+        esc(found[k].en) + (found[k].es && found[k].es !== found[k].en ? " · " + esc(found[k].es) : "") + "</span>";
+    }
+    return html + "</div>";
   }
 
   function findExam(id) {
@@ -213,6 +281,15 @@
       );
     }
     html.push("</div>");
+
+    html.push(
+      "<div class='card'>" +
+      "<p class='eyebrow'>Recursos</p>" +
+      "<h3>Siglas y abreviaturas</h3>" +
+      "<p class='page-sub'>El significado de las "+SIGLAS.length+" siglas del examen RBT, como RBT, DTT, SD, DRO, FR, etc.</p>" +
+      "<button class='btn btn-ghost' data-action='siglas'>Ver las siglas</button>" +
+      "</div>"
+    );
 
     html.push(
       "<div class='card'>" +
@@ -442,20 +519,48 @@
     var ex = study.exam;
     var total = ex.questions.length;
     var q = ex.questions[study.i];
+    var tr = getTrans(ex, study.i);
     var html = [];
     html.push("<div class='quiz-top'>" +
       "<button class='btn btn-ghost' data-action='home'>Inicio</button>" +
       "<span class='count'>Estudio · Pregunta " + (study.i + 1) + " de " + total + "</span></div>");
     html.push("<div class='progress-track'><div class='progress-fill' style='width:" + Math.round((study.i / total) * 100) + "%'></div></div>");
 
-    html.push("<div class='card'>");
-    html.push("<p class='question-text'>" + (study.i + 1) + ". " + esc(q.q) + "</p>");
+    html.push("<div class='study-split'>");
+
+    /* columna izquierda: pregunta oficial en ingles */
+    html.push("<div class='study-col study-col-en'>");
+    html.push("<div class='col-head'>Pregunta oficial (inglés, como el examen)</div>");
+    html.push("<p class='question-text'>" + (study.i + 1) + ". " + annotate(q.q) + "</p>");
     for (var j = 0; j < q.opts.length; j++) {
       var cls = "option" + (study.revealed && j === q.ans ? " correct" : "") + (study.revealed ? " dim" : "");
       if (study.revealed && j === q.ans) cls = cls.replace(" dim", "");
       html.push("<div class='" + cls + "'><span class='letter'>" + LETTERS[j] + "</span>" +
-        "<span class='opt-text'>" + esc(q.opts[j]) + "</span></div>");
+        "<span class='opt-text'>" + annotate(q.opts[j]) + "</span></div>");
     }
+    html.push(siglaLegend(q.q));
+    html.push("</div>");
+
+    /* columna derecha: traduccion al espanol */
+    html.push("<div class='study-col study-col-es'>");
+    html.push("<div class='col-head'>Traducción al español</div>");
+    if (tr) {
+      html.push("<div class='translation'>");
+      html.push("<p class='question-text'>" + (study.i + 1) + ". " + annotate(tr.q) + "</p>");
+      html.push("<ul class='trans-opts'>");
+      for (var tj = 0; tj < tr.opts.length && tj < q.opts.length; tj++) {
+        html.push("<li><span class='letter'>" + LETTERS[tj] + "</span>" + annotate(tr.opts[tj]) + "</li>");
+      }
+      html.push("</ul>");
+      html.push(siglaLegend(tr.q));
+      html.push("</div>");
+    } else {
+      html.push("<div class='translation'><b>Traducción no disponible para esta pregunta.</b></div>");
+    }
+    html.push("</div>");
+
+    html.push("</div>"); /* cierra study-split */
+
     if (study.revealed) {
       var sexp = q.ex ? "<span class='ex'>" + esc(q.ex) + "</span>" : "";
       html.push("<div class='feedback-box ok show'><b>Respuesta correcta:</b> " + LETTERS[q.ans] + ") " + esc(q.opts[q.ans]) + sexp + "</div>");
@@ -466,7 +571,7 @@
         ? "<button class='btn btn-secondary' data-action='snext'>Siguiente →</button>"
         : "<button class='btn btn-primary' data-action='sreveal'>Revelar respuesta</button>") +
       "</div>");
-    html.push("</div>");
+
     view.innerHTML = html.join("");
     renderSideHome();
   }
@@ -537,6 +642,36 @@
       "</div>";
   }
 
+  /* ---------------- siglas ---------------- */
+  function renderSiglas() {
+    var html = [];
+    html.push("<h2 class='page-title'>Siglas y abreviaturas</h2>");
+    html.push("<p class='page-sub'>El significado de las siglas usadas en el examen, con su nombre en español (e inglés).</p>");
+    html.push("<div class='siglas-list'>");
+    for (var k = 0; k < SIGLAS.length; k++) {
+      var s = SIGLAS[k];
+      html.push(
+        "<div class='sigla-item'>" +
+        "<div class='sigla-code'>" + esc(s.sigla) + "</div>" +
+        "<div class='sigla-text'>" +
+        "<div class='sigla-es'>" + esc(s.es) + "</div>" +
+        "<div class='sigla-en'>" + esc(s.en || "") + "</div>" +
+        "</div></div>"
+      );
+    }
+    html.push("</div>");
+    html.push(
+      "<div class='card'>" +
+      "<p class='eyebrow'>Recursos</p>" +
+      "<h3>¿Te sirve este glosario?</h3>" +
+      "<p class='page-sub'>Usa esta sección junto con el modo Tarjetas y la Guía para dominar los términos del examen.</p>" +
+      "<button class='btn btn-ghost' data-action='cards'>Repasar tarjetas</button>" +
+      "</div>"
+    );
+    view.innerHTML = html.join("");
+    renderSideHome();
+  }
+
   /* ---------------- guide ---------------- */
   function renderGuide() {
     var html = [];
@@ -558,6 +693,7 @@
 
     if (action === "home") renderHome();
     else if (action === "cards") startCards();
+    else if (action === "siglas") renderSiglas();
     else if (action === "flip") { cards.flipped = !cards.flipped; renderCards(); }
     else if (action === "cprev" && cards.i > 0) { cards.i--; cards.flipped = false; renderCards(); }
     else if (action === "cnext") { if (cards.i < cards.order.length - 1) cards.i++; else { cards.flipped = true; } cards.flipped = false; renderCards(); }
@@ -588,6 +724,7 @@
       setNav(target);
       if (target === "home") renderHome();
       else if (target === "cards") startCards();
+      else if (target === "siglas") renderSiglas();
       else if (target === "guide") renderGuide();
     });
   }
