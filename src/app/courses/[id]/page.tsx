@@ -215,9 +215,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
 
               <div className="space-y-4 p-4">
                 <a
-                  href={course.stripeLink || "/contact"}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/courses/${course.id}/checkout/`}
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-700 hover:shadow-lg"
                 >
                   <Play className="h-4 w-4" /> Start Course
@@ -253,9 +251,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
             Build a solid foundation in the Incident Command System and respond with confidence.
           </p>
           <a
-            href={course.stripeLink || "/contact"}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`/courses/${course.id}/checkout/`}
             className="mt-5 inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3 text-sm font-semibold text-primary transition-all hover:bg-emerald-50 hover:shadow-lg"
           >
             <Play className="h-4 w-4" /> Start Course

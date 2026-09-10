@@ -36,7 +36,7 @@
             "title": "Welcome and Course Objectives",
             "description": "What you will learn and how the course is organized.",
             "order": 1,
-            "content": "",
+            "content": "Welcome to the Incident Command System (ICS-100). This course introduces you to one of the most widely used emergency management tools in the world. By the end of the course you will be able to explain the principles and basic structure of ICS, describe the NIMS management characteristics that form its foundation, and identify the roles of the Incident Commander, Command Staff and General Staff. The course is organized in six modules with short lessons, each focused on one core idea, and finishes with a final knowledge assessment. Work at your own pace and revisit any lesson as often as you need.",
             "videoUrl": ""
           },
           {
@@ -44,7 +44,7 @@
             "title": "What is the Incident Command System?",
             "description": "Definition, history, and the three purposes of ICS.",
             "order": 2,
-            "content": "",
+            "content": "ICS is a standardized on-scene, all-hazards incident management system created in the 1970s after a series of destructive wildfires in California exposed the problems of uncoordinated multi-agency response: unclear chains of command, poor communication, and uncontrolled resource use. Managed initially through the FIRESCOPE project, ICS was adopted nationwide and later integrated into the National Incident Management System (NIMS). ICS has three main purposes: establish clear command, ensure responder and public safety, and make the most efficient use of available resources. Because it is flexible and scalable, ICS can manage anything from a public works crew to a large disaster response.",
             "videoUrl": ""
           },
           {
@@ -52,7 +52,7 @@
             "title": "When and Where ICS is Used",
             "description": "Natural, technological and human-caused hazards, plus planned events.",
             "order": 3,
-            "content": "",
+            "content": "ICS is designed to manage all types of incidents, whether they are natural hazards such as hurricanes and floods, technological hazards such as hazardous-material releases, human-caused hazards such as industrial accidents or acts of violence, or planned events such as large public gatherings and festivals. The system works at every level of government and in the private sector, and it allows different agencies and organizations with different structures and cultures to work together through a single, consistent framework. Over the course of an incident, ICS can expand or contract as the complexity of the situation changes.",
             "videoUrl": ""
           }
         ]
@@ -68,7 +68,7 @@
             "title": "The 14 NIMS Management Characteristics",
             "description": "Overview of the principles that define ICS operations.",
             "order": 1,
-            "content": "",
+            "content": "ICS is built on fourteen management characteristics, which together describe how the system works. They are: common terminology; modular organization; management by objectives; incident action planning; manageable span of control; incident facilities and locations; comprehensive resource management; integrated communications; establishment and transfer of command; unified command; chain of command and unity of command; accountability; dispatch and deployment; and information and intelligence management. You do not need to memorize the list. What matters is understanding that every feature of ICS exists to make command clear, communication reliable, and resource use accountable during complex incidents.",
             "videoUrl": ""
           },
           {
@@ -76,7 +76,7 @@
             "title": "Chain of Command, Unity of Command & Span of Control",
             "description": "How command flows, why it matters, and supervisor ratios.",
             "order": 2,
-            "content": "",
+            "content": "Chain of command is the orderly line of authority within an organization, from supervisor to subordinate. Unity of command means that every person reports to exactly one designated supervisor, which prevents confusing and conflicting orders. Span of control refers to the number of personnel or resources one supervisor can effectively manage; ICS recommends a span of three to seven reporting elements, with five as the general optimum. When the span of control grows too large, the organization is expanded by creating additional positions, divisions, groups or branches — this is how ICS stays manageable even on very large incidents.",
             "videoUrl": ""
           },
           {
@@ -84,7 +84,7 @@
             "title": "Common Terminology & Integrated Communications",
             "description": "Standardized language and interoperable communications across agencies.",
             "order": 3,
-            "content": "",
+            "content": "To avoid confusion, ICS uses common terminology for organizational functions, resource types and facilities. Plain language is used rather than codes, and radio frequencies, terms and signals are standardized so that agencies can cooperate without misunderstanding. Integrated communications means planning in advance how agencies will communicate: which frequencies and systems will be used, who will manage them, and how information will flow. Good communications planning prevents the failure that historically caused many response problems: individuals and organizations operating on incompatible systems.",
             "videoUrl": ""
           }
         ]
@@ -100,7 +100,7 @@
             "title": "Organizing by Function: The Five Major Sections",
             "description": "Command, Operations, Planning, Logistics and Finance/Administration.",
             "order": 1,
-            "content": "",
+            "content": "ICS organizes work by function rather than by agency or personality. The command function is led by the Incident Commander. Supporting the command function are the four General Staff sections: Operations, which carries out tactical response; Planning, which collects and analyzes information and produces the Incident Action Plan; Logistics, which provides facilities, services and support; and Finance/Administration, which manages costs and financial documentation. An optional fifth function, Intelligence and Investigations, can be added when needed. Each section can be expanded into branches, divisions, groups and units as the incident grows.",
             "videoUrl": ""
           },
           {
@@ -108,7 +108,7 @@
             "title": "ICS Facilities and Common Terminology",
             "description": "Incident Command Post, staging areas, bases, camps and the common naming conventions.",
             "order": 2,
-            "content": "",
+            "content": "ICS uses a small set of named facilities to support response. The Incident Command Post (ICP) is the physical location where the command function operates. Staging Areas hold resources ready for immediate assignment. The Incident Base is the main support location, and Camps are temporary locations for resources in remote areas. Helibases and Helispots support helicopter operations. Using consistent names for facilities means any arriving unit instantly understands where things are, regardless of which agency they come from.",
             "videoUrl": ""
           },
           {
@@ -116,7 +116,7 @@
             "title": "Resource Management & Accountability",
             "description": "Resource typing, check-in, and maintaining personnel accountability.",
             "order": 3,
-            "content": "",
+            "content": "Accountability is essential on every incident. Resources check in when they arrive, and their status is tracked as assigned, available, or out of service. Resource typing describes the capability of a resource so that requests are filled with the right equipment or personnel. Personnel safety is reinforced by the buddy system, accountability tags, and structured check-in procedures. Accurate resource tracking prevents over-ordering, avoids personnel getting lost in the system, and guarantees that everyone on scene knows who is where and doing what.",
             "videoUrl": ""
           }
         ]
@@ -132,7 +132,7 @@
             "title": "The Incident Commander and the Command Function",
             "description": "Responsibilities, qualifications and the authority of the Incident Commander.",
             "order": 1,
-            "content": "",
+            "content": "The Incident Commander (IC) has overall responsibility for incident activities, including developing objectives, ordering and using resources, and overseeing all activities until a transfer of command occurs or the incident concludes. The IC must be the person in the best position to manage the incident, not necessarily the highest-ranking official. For smaller incidents, the IC personally handles the roles of Command Staff and General Staff. For larger incidents, the IC delegates those responsibilities. When multiple agencies are involved, the command function can operate as Unified Command, with multiple commanders developing a single set of incident objectives together.",
             "videoUrl": ""
           },
           {
@@ -140,7 +140,7 @@
             "title": "Command vs. General Staff & Transfer of Command",
             "description": "Key distinctions and the process for safe, documented command transfer.",
             "order": 2,
-            "content": "",
+            "content": "Command Staff are the positions that report directly to and support the Incident Commander in the command function; they cannot operate without IC approval. General Staff are the heads of the Operations, Planning, Logistics, and Finance/Administration sections, which are the primary functional areas of the organization. Transfer of command is the formal process of handing responsibility from one Incident Commander to another, usually when a more qualified person arrives, the incident changes in nature, or the incident winds down. An outgoing IC transfers command through a clear briefing so that leadership continuity is never lost.",
             "videoUrl": ""
           },
           {
@@ -148,7 +148,7 @@
             "title": "Public Information, Safety and Liaison Officers",
             "description": "The PIO, SOFR and LOFR roles and how they support the Incident Commander.",
             "order": 3,
-            "content": "",
+            "content": "The Command Staff include the Public Information Officer (PIO), who serves as the primary point of contact for the media and coordinates public information; the Safety Officer (SOFR), who monitors incident operations and advises on health and safety, with the authority to stop unsafe acts; and the Liaison Officer (LOFR), who is the point of contact for assisting and cooperating agencies. These positions must be assigned only when the incident is complex enough to require them; on smaller incidents the Incident Commander performs these functions directly.",
             "videoUrl": ""
           },
           {
@@ -156,7 +156,7 @@
             "title": "Management by Objectives",
             "description": "Setting incident objectives and the operational planning cycle.",
             "order": 4,
-            "content": "",
+            "content": "Management by objectives is central to ICS. The Incident Commander establishes clear, measurable incident objectives, and every element of the organization works toward them. Objectives are translated into strategies and tactics during the operational planning cycle, and they are communicated through the Incident Action Plan (IAP), which covers a specific operational period. The cycle includes preparing, planning, and holding operations briefings, then executing and evaluating during the operational period. This disciplined cycle ensures the response stays focused and adapts to changing conditions.",
             "videoUrl": ""
           }
         ]
@@ -172,7 +172,7 @@
             "title": "The Operations Section",
             "description": "The section that conducts tactical operations to achieve the incident objectives.",
             "order": 1,
-            "content": "",
+            "content": "The Operations Section is where the tactical work happens. Led by the Operations Section Chief, it directs all resources and tactical activities required to implement the Incident Action Plan. Operations is organized into branches when needed, then into divisions (geographic areas) and groups (functional areas). On large incidents, a Deputy Operations Section Chief may be assigned. Because this section carries the risk of the operation, close coordination between Operations and the Safety Officer is critical on every incident.",
             "videoUrl": ""
           },
           {
@@ -180,7 +180,7 @@
             "title": "The Planning Section",
             "description": "Situation awareness, resource tracking and the Incident Action Plan.",
             "order": 2,
-            "content": "",
+            "content": "The Planning Section, led by the Planning Section Chief, gathers and evaluates information about the incident and the resources available. It produces the Incident Action Plan, maintains the display of incident status, and supports planning meetings and briefings. Its units typically include Situation, Resources, Documentation, and Demobilization. The Planning Section helps answer two questions continuously: where do we stand now, and what is the best strategy for the next operational period.",
             "videoUrl": ""
           },
           {
@@ -188,7 +188,7 @@
             "title": "The Logistics Section",
             "description": "Facilities, transportation, communications, supplies and food services.",
             "order": 3,
-            "content": "",
+            "content": "The Logistics Section, led by the Logistics Section Chief, provides the support that allows operations to continue. It is organized into a Service Branch (communications, medical, and food units) and a Support Branch (supply, facilities, and ground support units). Logistics arranges facilities, equipment, supplies, transportation and communications. Without solid logistics, operations eventually grind to a halt, which is why planning and logistics must coordinate closely with operations from the very beginning of an incident.",
             "videoUrl": ""
           },
           {
@@ -196,7 +196,7 @@
             "title": "The Finance/Administration Section",
             "description": "Cost documentation, procurement, time, compensation and claims.",
             "order": 4,
-            "content": "",
+            "content": "The Finance/Administration Section, led by the Finance/Administration Section Chief, manages the financial aspects of the incident. Its units typically include Time, Procurement, Compensation and Claims, and Cost. On smaller or short-duration incidents, the Incident Commander may handle these duties. Accurate financial documentation is not bureaucracy for its own sake: most jurisdictions eventually recover incident costs from responsible parties or reimbursements, and that is only possible when costs are documented properly from the start.",
             "videoUrl": ""
           }
         ]
@@ -212,7 +212,7 @@
             "title": "Applying ICS in Your Role and Organization",
             "description": "Using ICS across disciplines, agencies and jurisdictions.",
             "order": 1,
-            "content": "",
+            "content": "ICS applies to nearly every discipline that participates in response: fire, law enforcement, EMS, public health, schools, hospitals, utilities, public works, and private-sector safety and security teams. Whatever your role, the principles are the same: know your position in the incident organization, understand your span of control and chain of command, and follow the Incident Action Plan. Training such as ICS-700 and ICS-200 builds on this foundation, and annual refresher courses are recommended to keep skills current. The value of ICS comes from practicing it before an incident, not during one.",
             "videoUrl": ""
           },
           {
@@ -220,7 +220,7 @@
             "title": "Course Review & Final Knowledge Assessment",
             "description": "Summary of key concepts and the final assessment (minimum passing score 75%).",
             "order": 2,
-            "content": "",
+            "content": "Let us review the key concepts: ICS is a standardized on-scene management system built on fourteen NIMS management characteristics; it organizes by function through Command, Operations, Planning, Logistics, and Finance/Administration; it is scalable through modular organization and spans of control; it uses common terminology, named facilities, and disciplined resource accountability; and it applies to every agency and discipline involved in response. You are now ready for the final knowledge assessment. The minimum passing score is 75%. Review the lessons above as often as you like, then complete the assessment with confidence.",
             "videoUrl": ""
           }
         ]
