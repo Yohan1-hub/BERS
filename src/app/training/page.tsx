@@ -133,9 +133,9 @@ function CourseCard({
 
   return (
     <motion.a
-      href={course.stripeLink}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={course.href ?? course.stripeLink}
+      target={course.href ? undefined : "_blank"}
+      rel={course.href ? undefined : "noopener noreferrer"}
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}

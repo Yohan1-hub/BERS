@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, Play, Sparkles } from "lucide-react";
+import { BookOpen, Play, Sparkles, Layers, ListChecks, ArrowRight } from "lucide-react";
 import courses from "@/data/courses/static-data.json";
 
 const published = (courses as any[]).filter((c: any) => c.status === "published");
@@ -24,12 +24,16 @@ export default function CoursesPage() {
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {published.map((course: any) => {
-              const lessons = course.modules?.reduce((a: number, m: any) => a + (m.lessons?.length || 0), 0) || 0;
+              const lessons =
+                course.modules?.reduce(
+                  (a: number, m: any) => a + (m.lessons?.length || 0),
+                  0,
+                ) || 0;
               return (
                 <Link
                   key={course.id}
                   href={`/courses/${course.id}/`}
-                  className="group rounded-xl border border-slate-200 p-6 transition-all hover:border-emerald-200 hover:shadow-lg"
+                  className="group flex flex-col rounded-xl border border-slate-200 p-6 transition-all hover:border-emerald-200 hover:shadow-lg"
                 >
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600">
                     <BookOpen className="h-6 w-6" />
@@ -42,12 +46,27 @@ export default function CoursesPage() {
                   </p>
                   <div className="flex items-center gap-4 text-xs text-slate-400">
                     <span className="flex items-center gap-1">
-                      <BookOpen className="h-3.5 w-3.5" />
+                      <Layers className="h-3.5 w-3.5" />
                       {course.modules?.length || 0} modules
                     </span>
                     <span className="flex items-center gap-1">
-                      <Play className="h-3.5 w-3.5" />
+                      <ListChecks className="h-3.5 w-3.5" />
                       {lessons} lessons
+                    </span>
+                    {course.duration && (
+                      <span className="flex items-center gap-1">
+                        <Play className="h-3.5 w-3.5" />
+                        {course.duration}
+                      </span>
+                    )}
+                  </div>
+                  <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+                    <span className="text-lg font-bold text-slate-800">
+                      ${typeof course.price === "number" ? course.price : course.price}
+                    </span>
+                    <span className="flex items-center gap-1 text-xs font-semibold text-primary transition-colors group-hover:text-secondary">
+                      View course
+                      <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
                 </Link>

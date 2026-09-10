@@ -6,6 +6,7 @@ export interface Course {
   duration: string;
   price: number;
   stripeLink: string;
+  href?: string;
   featured?: boolean;
   rating?: number;
   students?: number;
@@ -47,16 +48,17 @@ export const courses: Course[] = [
     id: "ics-100",
     title: "Incident Command System (ICS-100)",
     description:
-      "Fundamentals of the Incident Command System, chain of command, and unified command principles for emergency response.",
+      "Introduction to the Incident Command System: history, features and principles, NIMS management characteristics, and the roles of the Incident Commander, Command Staff and General Staff.",
     category: "ehsq",
-    duration: "8 hours",
+    duration: "2 hours",
     price: 49,
     stripeLink: "https://buy.stripe.com/placeholder-ehsq-ics100",
+    href: "/courses/ics-100/",
     featured: true,
     rating: 4.7,
     students: 3420,
     instructor: "Yohan Ariza",
-    lectures: 24,
+    lectures: 18,
   },
   {
     id: "first-aid",

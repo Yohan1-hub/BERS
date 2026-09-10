@@ -1,31 +1,233 @@
 [
   {
-    "id": "sample-course",
-    "title": "Introduction to EHSQ Management",
-    "description": "Learn the fundamentals of Environmental, Health, Safety, and Quality management systems. This course covers ISO standards, risk assessment, and compliance frameworks.",
+    "id": "ics-100",
+    "title": "Incident Command System (ICS-100)",
+    "slug": "incident-command-system-ics-100",
+    "topic": "Incident Command System",
+    "description": "Introduction to the Incident Command System: its history, features and principles, the NIMS management characteristics, and the roles of the Incident Commander, Command Staff and General Staff during emergency response.",
     "status": "published",
     "language": "en",
+    "category": "ehsq",
+    "instructor": "Yohan Ariza",
+    "price": 49,
+    "duration": "2 hours",
+    "lectures": 18,
+    "ceus": "0.2 CEUs",
+    "level": "Beginner",
+    "prerequisites": "None. No prior ICS or emergency management training is required.",
+    "audience": "Personnel involved in emergency planning, response or recovery — including fire, law enforcement, EMS, healthcare, schools, government, public works, and private-sector safety and security teams.",
+    "stripeLink": "https://buy.stripe.com/placeholder-ehsq-ics100",
+    "whatYouLearn": [
+      "Explain the principles and basic structure of the Incident Command System (ICS)",
+      "Describe the NIMS management characteristics that are the foundation of ICS",
+      "Describe the ICS functional areas and the roles of the Incident Commander and Command Staff",
+      "Identify the General Staff roles within ICS",
+      "Apply NIMS management characteristics to ICS in a variety of roles and disciplines"
+    ],
     "modules": [
       {
         "id": "mod-1",
-        "title": "Foundations of EHSQ",
-        "description": "Core concepts and international standards",
+        "title": "Course Welcome & ICS Overview",
+        "description": "Course orientation, the purpose and history of ICS, and when the system is used.",
+        "order": 1,
         "lessons": [
-          { "id": "les-1", "title": "What is EHSQ?", "description": "Overview of integrated management systems", "videoUrl": "" },
-          { "id": "les-2", "title": "ISO Standards Overview", "description": "ISO 9001, 14001, 45001 frameworks", "videoUrl": "" }
+          {
+            "id": "les-1-1",
+            "title": "Welcome and Course Objectives",
+            "description": "What you will learn and how the course is organized.",
+            "order": 1,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-1-2",
+            "title": "What is the Incident Command System?",
+            "description": "Definition, history, and the three purposes of ICS.",
+            "order": 2,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-1-3",
+            "title": "When and Where ICS is Used",
+            "description": "Natural, technological and human-caused hazards, plus planned events.",
+            "order": 3,
+            "content": "",
+            "videoUrl": ""
+          }
         ]
       },
       {
         "id": "mod-2",
-        "title": "Risk Assessment",
-        "description": "Identifying and mitigating workplace hazards",
+        "title": "NIMS Management Characteristics",
+        "description": "The management characteristics that make ICS effective and scalable.",
+        "order": 2,
         "lessons": [
-          { "id": "les-3", "title": "Hazard Identification", "description": "Systematic approaches to finding risks", "videoUrl": "" },
-          { "id": "les-4", "title": "Control Measures", "description": "Hierarchy of controls", "videoUrl": "" }
+          {
+            "id": "les-2-1",
+            "title": "The 14 NIMS Management Characteristics",
+            "description": "Overview of the principles that define ICS operations.",
+            "order": 1,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-2-2",
+            "title": "Chain of Command, Unity of Command & Span of Control",
+            "description": "How command flows, why it matters, and supervisor ratios.",
+            "order": 2,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-2-3",
+            "title": "Common Terminology & Integrated Communications",
+            "description": "Standardized language and interoperable communications across agencies.",
+            "order": 3,
+            "content": "",
+            "videoUrl": ""
+          }
+        ]
+      },
+      {
+        "id": "mod-3",
+        "title": "ICS Organization & Facilities",
+        "description": "How ICS organizes work by function and the facilities used to support response.",
+        "order": 3,
+        "lessons": [
+          {
+            "id": "les-3-1",
+            "title": "Organizing by Function: The Five Major Sections",
+            "description": "Command, Operations, Planning, Logistics and Finance/Administration.",
+            "order": 1,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-3-2",
+            "title": "ICS Facilities and Common Terminology",
+            "description": "Incident Command Post, staging areas, bases, camps and the common naming conventions.",
+            "order": 2,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-3-3",
+            "title": "Resource Management & Accountability",
+            "description": "Resource typing, check-in, and maintaining personnel accountability.",
+            "order": 3,
+            "content": "",
+            "videoUrl": ""
+          }
+        ]
+      },
+      {
+        "id": "mod-4",
+        "title": "Command Staff & the Incident Commander",
+        "description": "The role of the Incident Commander and the Command Staff officers who support command.",
+        "order": 4,
+        "lessons": [
+          {
+            "id": "les-4-1",
+            "title": "The Incident Commander and the Command Function",
+            "description": "Responsibilities, qualifications and the authority of the Incident Commander.",
+            "order": 1,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-4-2",
+            "title": "Command vs. General Staff & Transfer of Command",
+            "description": "Key distinctions and the process for safe, documented command transfer.",
+            "order": 2,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-4-3",
+            "title": "Public Information, Safety and Liaison Officers",
+            "description": "The PIO, SOFR and LOFR roles and how they support the Incident Commander.",
+            "order": 3,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-4-4",
+            "title": "Management by Objectives",
+            "description": "Setting incident objectives and the operational planning cycle.",
+            "order": 4,
+            "content": "",
+            "videoUrl": ""
+          }
+        ]
+      },
+      {
+        "id": "mod-5",
+        "title": "General Staff Roles",
+        "description": "The four General Staff sections and the work they lead during an incident.",
+        "order": 5,
+        "lessons": [
+          {
+            "id": "les-5-1",
+            "title": "The Operations Section",
+            "description": "The section that conducts tactical operations to achieve the incident objectives.",
+            "order": 1,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-5-2",
+            "title": "The Planning Section",
+            "description": "Situation awareness, resource tracking and the Incident Action Plan.",
+            "order": 2,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-5-3",
+            "title": "The Logistics Section",
+            "description": "Facilities, transportation, communications, supplies and food services.",
+            "order": 3,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-5-4",
+            "title": "The Finance/Administration Section",
+            "description": "Cost documentation, procurement, time, compensation and claims.",
+            "order": 4,
+            "content": "",
+            "videoUrl": ""
+          }
+        ]
+      },
+      {
+        "id": "mod-6",
+        "title": "How ICS Applies to You & Final Assessment",
+        "description": "Applying ICS in your organization and completing the course assessment.",
+        "order": 6,
+        "lessons": [
+          {
+            "id": "les-6-1",
+            "title": "Applying ICS in Your Role and Organization",
+            "description": "Using ICS across disciplines, agencies and jurisdictions.",
+            "order": 1,
+            "content": "",
+            "videoUrl": ""
+          },
+          {
+            "id": "les-6-2",
+            "title": "Course Review & Final Knowledge Assessment",
+            "description": "Summary of key concepts and the final assessment (minimum passing score 75%).",
+            "order": 2,
+            "content": "",
+            "videoUrl": ""
+          }
         ]
       }
     ],
     "createdAt": "2025-01-15T00:00:00.000Z",
-    "updatedAt": "2025-06-01T00:00:00.000Z"
+    "updatedAt": "2026-09-10T00:00:00.000Z",
+    "publishedAt": "2026-09-10T00:00:00.000Z"
   }
 ]
