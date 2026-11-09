@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Logo from "./Logo";
@@ -26,8 +27,20 @@ const moreLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   const scrollTo = (id: string) => {
+    if (!isHome) {
+      window.location.href = !id || id === "#" ? "/" : `/${id}`;
+      setIsOpen(false);
+      return;
+    }
+    if (!id || id === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setIsOpen(false);
+      return;
+    }
     const target = document.querySelector(id);
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
@@ -38,7 +51,7 @@ export default function Header() {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 border-b border-slate-100/80 bg-white/95 backdrop-blur-md">
       <div className="section-container flex h-20 items-center justify-between md:h-32">
-        <a href="#" className="flex shrink-0 items-center">
+        <a href="/" className="flex shrink-0 items-center" aria-label="BERS Institute home">
           <Logo className="h-10 w-auto sm:h-12 md:h-20" />
         </a>
 
@@ -109,6 +122,8 @@ export default function Header() {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
           className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 transition-colors hover:bg-slate-100 md:hidden"
         >
           {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

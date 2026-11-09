@@ -2,14 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Mail, Send, CheckCircle } from "lucide-react";
+import { Mail, Send, CheckCircle, AlertTriangle, Loader2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+const CONTACT_EMAIL = "yohan.ariza@bersinstitute.org";
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "" });
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -17,16 +22,63 @@ export default function ContactPage() {
     if (serviceParam) setForm((f) => ({ ...f, service: serviceParam }));
   }, []);
 
+  const mailtoFallback = () => {
+    const body = [
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      `Phone: ${form.phone}`,
+      `Service: ${form.service}`,
+      "",
+      form.message,
+    ].join("\n");
+    return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+      `Quote request${form.service ? ` — ${form.service}` : ""}`,
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setStatus("sending");
+    setErrorMessage("");
 
-    const body = `Name: ${form.name}%0D%0AEmail: ${form.email}%0D%0APhone: ${form.phone}%0D%0AService: ${form.service}%0D%0A%0D%0A${form.message}`;
-    const mailto = `mailto:yohan.ariza@bersinstitue.org?subject=${encodeURIComponent("Contact from bersinstitute.org")}&body=${body}`;
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          service: form.service,
+          message: form.message,
+          _subject: `New quote request${form.service ? ` — ${form.service}` : ""}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
 
-    window.location.href = mailto;
-    setSent(true);
-    setLoading(false);
+      const data = await res.json().catch(() => ({}));
+      const ok = data?.success === true || data?.success === "true";
+      if (res.ok && ok) {
+        setStatus("success");
+      } else {
+        setErrorMessage(
+          "The online form is temporarily unavailable. Please send your request using the direct email link below — it reaches the same inbox.",
+        );
+        setStatus("error");
+      }
+    } catch {
+      setErrorMessage(
+        "We could not reach the server. Please use the direct email link below.",
+      );
+      setStatus("error");
+    }
+  };
+
+  const reset = () => {
+    setForm({ name: "", email: "", phone: "", service: "", message: "" });
+    setStatus("idle");
+    setErrorMessage("");
   };
 
   return (
@@ -50,13 +102,17 @@ export default function ContactPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                {sent ? (
+                {status === "success" ? (
                   <div className="flex flex-col items-center justify-center rounded-2xl bg-emerald-50 p-12 text-center">
                     <CheckCircle className="h-12 w-12 text-emerald-500" />
-                    <h3 className="mt-4 text-xl font-bold text-emerald-800">Email Opened!</h3>
-                    <p className="mt-2 text-emerald-600">Check your email client to send the message.</p>
-                    <button onClick={() => { setSent(false); setForm({ name: "", email: "", phone: "", service: "", message: "" }); }}
-                      className="btn-primary mt-6">Send another</button>
+                    <h3 className="mt-4 text-xl font-bold text-emerald-800">Message sent!</h3>
+                    <p className="mt-2 text-emerald-600">
+                      Thanks {form.name.split(" ")[0] || "for reaching out"}. We received your
+                      request and will reply within 24 hours.
+                    </p>
+                    <button onClick={reset} className="btn-primary mt-6">
+                      Send another
+                    </button>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
@@ -90,11 +146,34 @@ export default function ContactPage() {
                       <textarea rows={5} required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
                         className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none focus:border-emerald-500" />
                     </div>
-                    <button type="submit" disabled={loading}
-                      className="btn-primary w-full justify-center sm:w-auto">
-                      <Send className="h-4 w-4" /> {loading ? "Opening email..." : "Send Message"}
+
+                    {status === "error" && (
+                      <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                        <div>
+                          <p>{errorMessage}</p>
+                          <a href={mailtoFallback()} className="mt-1 inline-block font-semibold text-amber-900 underline">
+                            Send it from your email app instead
+                          </a>
+                        </div>
+                      </div>
+                    )}
+
+                    <button type="submit" disabled={status === "sending"}
+                      className="btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto">
+                      {status === "sending" ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" /> Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4" /> Send Message
+                        </>
+                      )}
                     </button>
-                    <p className="text-xs text-slate-400">Opens your email client with the form data. Click send from there.</p>
+                    <p className="text-xs text-slate-400">
+                      Your message goes straight to {CONTACT_EMAIL}.
+                    </p>
                   </form>
                 )}
               </motion.div>
@@ -109,7 +188,7 @@ export default function ContactPage() {
                   <h3 className="text-lg font-bold text-slate-800">Get in Touch</h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-500">
                     Ready to start a project or need more information? Fill out the form
-                    and we'll get back to you within 24 hours.
+                    and we&apos;ll get back to you within 24 hours.
                   </p>
                 </div>
 
@@ -120,8 +199,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-slate-700">Email</p>
-                      <a href="mailto:yohan.ariza@bersinstitue.org" className="text-sm text-slate-500 hover:text-emerald-600">
-                        yohan.ariza@bersinstitue.org
+                      <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-slate-500 hover:text-emerald-600">
+                        {CONTACT_EMAIL}
                       </a>
                     </div>
                   </div>

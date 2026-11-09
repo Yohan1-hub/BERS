@@ -7,24 +7,29 @@ const footerLinks = [
   {
     title: "Our Focus",
     links: [
-      "Water Security",
-      "Risk Management",
-      "Capacity Building",
-      "Climate Adaptation",
+      { label: "Water Security", href: "/#methodology" },
+      { label: "Risk Management", href: "/#methodology" },
+      { label: "Capacity Building", href: "/#methodology" },
+      { label: "Climate Adaptation", href: "/#methodology" },
     ],
   },
   {
     title: "Principles",
     links: [
-      "Operational Neutrality",
-      "Technical Rigor",
-      "Community First",
-      "Scientific Validation",
+      { label: "Operational Neutrality", href: "/#about" },
+      { label: "Technical Rigor", href: "/#about" },
+      { label: "Community First", href: "/#about" },
+      { label: "Scientific Validation", href: "/#about" },
     ],
   },
   {
     title: "Connect",
-    links: ["Contact Us", "Partnerships", "Research", "Careers"],
+    links: [
+      { label: "Contact Us", href: "/contact" },
+      { label: "Partnerships", href: "/contact?service=Partnerships" },
+      { label: "Research", href: "/blog" },
+      { label: "Careers", href: "/contact?service=Careers" },
+    ],
   },
 ];
 
@@ -59,8 +64,8 @@ export default function Footer() {
               holistic disaster risk reduction.
             </p>
             <div className="mt-6 space-y-2">
-              <a href="mailto:yohan.ariza@bersinstitue.org" className="flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-primary-300">
-                <Mail className="h-4 w-4" /> yohan.ariza@bersinstitue.org
+              <a href="mailto:yohan.ariza@bersinstitute.org" className="flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-primary-300">
+                <Mail className="h-4 w-4" /> yohan.ariza@bersinstitute.org
               </a>
             </div>
           </motion.div>
@@ -78,12 +83,12 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 {group.links.map((link) => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <a
-                      href="#"
+                      href={link.href}
                       className="text-sm text-slate-400 transition-colors hover:text-primary-300"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}

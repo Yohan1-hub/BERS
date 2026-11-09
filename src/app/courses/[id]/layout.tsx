@@ -1,7 +1,11 @@
 import courses from "@/data/courses/static-data.json";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export function generateStaticParams(): { id: string }[] {
-  return (courses as any[]).map((c: any) => ({ id: c.id }));
+  return (courses as any[])
+    .filter((course) => course.status === "published")
+    .map((course) => ({ id: course.id }));
 }
 
 export default function CourseSegmentLayout({
@@ -9,5 +13,11 @@ export default function CourseSegmentLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Header />
+      {children}
+      <Footer />
+    </>
+  );
 }

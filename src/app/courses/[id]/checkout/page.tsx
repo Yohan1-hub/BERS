@@ -5,8 +5,6 @@ import Link from "next/link";
 import {
   ArrowLeft,
   ShieldCheck,
-  CreditCard,
-  Lock,
   CheckCircle2,
   Loader2,
   BookOpen,
@@ -19,27 +17,11 @@ import courses from "@/data/courses/static-data.json";
 
 const list = courses as any[];
 
-function formatCardNumber(value: string): string {
-  return value
-    .replace(/\D/g, "")
-    .slice(0, 16)
-    .replace(/(\d{4})(?=\d)/g, "$1 ");
-}
-
-function formatExpiry(value: string): string {
-  const digits = value.replace(/\D/g, "").slice(0, 4);
-  if (digits.length <= 2) return digits;
-  return `${digits.slice(0, 2)}/${digits.slice(2)}`;
-}
-
 export default function CheckoutPage({ params }: { params: { id: string } }) {
   const course = list.find((c: any) => c.id === params.id) || null;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvc, setCvc] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "processing" | "success">("idle");
 
@@ -55,14 +37,15 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
   }
 
   const coursePrice = `$${typeof course.price === "number" ? course.price : course.price}`;
+  const lessonCount =
+    course.modules?.reduce((n: number, m: any) => n + (m.lessons?.length || 0), 0) ||
+    course.lectures ||
+    0;
 
   function validate(): boolean {
     const next: Record<string, string> = {};
-    if (name.trim().length < 3) next.name = "Enter the cardholder name";
+    if (name.trim().length < 3) next.name = "Enter your full name";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) next.email = "Enter a valid email";
-    if (cardNumber.replace(/\D/g, "").length !== 16) next.cardNumber = "Card number must have 16 digits";
-    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) next.expiry = "Use MM/YY format";
-    if (cvc.replace(/\D/g, "").length < 3) next.cvc = "Invalid CVC";
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -85,10 +68,11 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-5 px-4 pt-20 text-center md:pt-32">
         <CheckCircle2 className="h-16 w-16 text-emerald-500" />
-        <h1 className="text-2xl font-bold text-slate-800">Payment successful</h1>
+        <h1 className="text-2xl font-bold text-slate-800">Enrollment confirmed</h1>
         <p className="max-w-md text-slate-500">
-          You now have access to <span className="font-medium text-slate-700">{course.title}</span>.
-          A receipt was sent to {email.trim()}.
+          You now have demo access to{" "}
+          <span className="font-medium text-slate-700">{course.title}</span> on this
+          device. No payment was processed and no receipt was emailed.
         </p>
         <Link
           href={`/courses/${course.id}/learn/`}
@@ -101,7 +85,7 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-white pt-20 md:pt-32">
+    <main className="min-h-screen bg-white pt-20 md:pt-32">
       <div className="section-container py-10">
         <Link
           href={`/courses/${course.id}/`}
@@ -115,7 +99,7 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
           <div>
             <h1 className="text-2xl font-bold text-slate-800">Checkout</h1>
             <p className="mt-1 text-sm text-slate-500">
-              This checkout is a simulation for demonstration purposes. No real payment occurs.
+              This checkout is a demo. No payment is processed and no card details are requested.
             </p>
 
             <div className="mt-6 rounded-xl border border-slate-200 p-6">
@@ -135,7 +119,7 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
                   <Layers className="h-4 w-4 text-primary" /> {course.modules?.length || 0} modules
                 </li>
                 <li className="flex items-center gap-2">
-                  <ListChecks className="h-4 w-4 text-primary" /> {course.lectures || 0} lessons
+                  <ListChecks className="h-4 w-4 text-primary" /> {lessonCount} lessons
                 </li>
                 <li className="flex items-center gap-2">
                   <Award className="h-4 w-4 text-primary" /> {course.ceus || "0.2 CEUs"}
@@ -151,13 +135,13 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          {/* Payment form */}
+          {/* Enrollment form */}
           <div>
             <div className="flex items-center gap-2 rounded-t-xl border border-slate-200 bg-slate-50 p-4">
-              <CreditCard className="h-5 w-5 text-primary" />
-              <span className="text-sm font-semibold text-slate-700">Payment details</span>
+              <BookOpen className="h-5 w-5 text-primary" />
+              <span className="text-sm font-semibold text-slate-700">Enrollment details</span>
               <span className="ml-auto flex items-center gap-1 text-xs text-slate-400">
-                <Lock className="h-3 w-3" /> Simulated
+                <ShieldCheck className="h-3 w-3" /> Demo
               </span>
             </div>
 
@@ -170,7 +154,7 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
             >
               <div>
                 <label className="mb-1 block text-xs font-semibold text-slate-600">
-                  Cardholder name
+                  Full name
                 </label>
                 <input
                   type="text"
@@ -194,48 +178,6 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
                 {errors.email && <p className="mt-1 text-xs text-rose-500">{errors.email}</p>}
               </div>
 
-              <div>
-                <label className="mb-1 block text-xs font-semibold text-slate-600">Card number</label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={cardNumber}
-                  onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
-                  placeholder="4242 4242 4242 4242"
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition-colors focus:border-primary"
-                />
-                {errors.cardNumber && (
-                  <p className="mt-1 text-xs text-rose-500">{errors.cardNumber}</p>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="mb-1 block text-xs font-semibold text-slate-600">Expiry</label>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={expiry}
-                    onChange={(e) => setExpiry(formatExpiry(e.target.value))}
-                    placeholder="MM/YY"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition-colors focus:border-primary"
-                  />
-                  {errors.expiry && <p className="mt-1 text-xs text-rose-500">{errors.expiry}</p>}
-                </div>
-                <div>
-                  <label className="mb-1 block text-xs font-semibold text-slate-600">CVC</label>
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={cvc}
-                    onChange={(e) => setCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
-                    placeholder="123"
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm outline-none transition-colors focus:border-primary"
-                  />
-                  {errors.cvc && <p className="mt-1 text-xs text-rose-500">{errors.cvc}</p>}
-                </div>
-              </div>
-
               <button
                 type="submit"
                 disabled={status === "processing"}
@@ -243,22 +185,22 @@ export default function CheckoutPage({ params }: { params: { id: string } }) {
               >
                 {status === "processing" ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin" /> Processing payment...
+                    <Loader2 className="h-4 w-4 animate-spin" /> Unlocking course...
                   </>
                 ) : (
                   <>
-                    <ShieldCheck className="h-4 w-4" /> Pay {coursePrice} and start
+                    <BookOpen className="h-4 w-4" /> Start course
                   </>
                 )}
               </button>
 
               <p className="flex items-center justify-center gap-1.5 pt-1 text-center text-[11px] text-slate-400">
-                <Lock className="h-3 w-3" /> Simulated checkout · No real charge is made
+                <ShieldCheck className="h-3 w-3" /> Demo enrollment · No payment data is collected
               </p>
             </form>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

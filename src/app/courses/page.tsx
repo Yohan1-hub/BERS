@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { BookOpen, Play, Sparkles, Layers, ListChecks, ArrowRight } from "lucide-react";
 import courses from "@/data/courses/static-data.json";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const published = (courses as any[]).filter((c: any) => c.status === "published");
 
 export default function CoursesPage() {
   return (
     <div className="min-h-screen bg-white pt-20 md:pt-32">
+      <Header />
       <div className="section-container py-10">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-800">Courses</h1>
@@ -75,6 +78,7 @@ export default function CoursesPage() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

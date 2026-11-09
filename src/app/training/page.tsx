@@ -13,6 +13,8 @@ import {
   BookOpen,
 } from "lucide-react";
 import { courses, categories } from "@/data/courses";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const categoryIcons: Record<string, typeof Shield> = {
   ehsq: Shield,
@@ -40,6 +42,7 @@ export default function TrainingPage() {
 
   return (
     <div className="min-h-screen bg-white pt-20 md:pt-32">
+      <Header />
       <div className="border-b border-slate-200 bg-white">
         <div className="section-container py-6 sm:py-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -117,6 +120,7 @@ export default function TrainingPage() {
           </>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
@@ -130,12 +134,11 @@ function CourseCard({
 }) {
   const Icon = categoryIcons[course.category] || Shield;
   const thumbGrad = thumbnailGradients[course.category];
+  const link = course.href ?? `/contact?service=${encodeURIComponent(course.title)}`;
 
   return (
     <motion.a
-      href={course.href ?? course.stripeLink}
-      target={course.href ? undefined : "_blank"}
-      rel={course.href ? undefined : "noopener noreferrer"}
+      href={link}
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-30px" }}
@@ -196,7 +199,7 @@ function CourseCard({
             ${course.price}
           </span>
           <span className="flex items-center gap-1 text-xs font-semibold text-primary transition-colors group-hover:text-secondary">
-            Enroll
+            {course.href ? "View course" : "Request info"}
             <ExternalLink className="h-3 w-3" />
           </span>
         </div>

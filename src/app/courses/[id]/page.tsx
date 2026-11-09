@@ -58,7 +58,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
   ];
 
   return (
-    <div className="min-h-screen bg-white pt-20 md:pt-32">
+    <main className="min-h-screen bg-white pt-20 md:pt-32">
       <div className="section-container py-10">
         <Link
           href="/courses"
@@ -248,7 +248,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
         <div className="mt-12 rounded-2xl bg-gradient-to-r from-primary to-emerald-700 p-8 text-center text-white">
           <h2 className="text-xl font-bold">Ready to take the course?</h2>
           <p className="mx-auto mt-1 max-w-xl text-sm text-emerald-50">
-            Build a solid foundation in the Incident Command System and respond with confidence.
+            Complete {course.title} at your own pace and earn your certificate of completion.
           </p>
           <a
             href={`/courses/${course.id}/checkout/`}
@@ -258,6 +258,6 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
           </a>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

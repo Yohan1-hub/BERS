@@ -77,6 +77,33 @@ export default function LearnPage({ params }: { params: { id: string } }) {
     );
   }
 
+  if (allLessons.length === 0) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-4 pt-20 text-center md:pt-32">
+        <Lock className="h-12 w-12 text-slate-300" />
+        <h1 className="text-2xl font-bold text-slate-800">Lessons coming soon</h1>
+        <p className="max-w-md text-slate-500">
+          {course.title} does not have published lessons yet. Please check back later or
+          contact us for the course schedule.
+        </p>
+        <div className="flex gap-3">
+          <Link
+            href="/courses"
+            className="inline-flex items-center gap-2 rounded-lg border-2 border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 transition-all hover:border-slate-300"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to courses
+          </Link>
+          <Link
+            href={`/contact?service=${encodeURIComponent(course.title)}`}
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-primary-700 hover:shadow-lg"
+          >
+            Ask about this course
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   const lesson = allLessons[activeIndex];
   const isCompleted = completed.includes(lesson.id);
   const progress = Math.round((completed.length / allLessons.length) * 100);
@@ -96,7 +123,7 @@ export default function LearnPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-white pt-20 md:pt-32">
+    <main className="min-h-screen bg-white pt-20 md:pt-32">
       <div className="section-container py-8">
         {/* Top bar */}
         <div className="flex flex-col gap-3 border-b border-slate-100 pb-5 sm:flex-row sm:items-center sm:justify-between">
@@ -193,7 +220,7 @@ export default function LearnPage({ params }: { params: { id: string } }) {
           </aside>
 
           {/* Lesson player */}
-          <main className="lg:col-span-2">
+          <section className="lg:col-span-2">
             <div className="rounded-xl border border-slate-200">
               <div className="border-b border-slate-100 p-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700">
@@ -266,7 +293,7 @@ export default function LearnPage({ params }: { params: { id: string } }) {
                   Congratulations! You completed the course
                 </h3>
                 <p className="max-w-md text-sm text-emerald-700">
-                  You mastered the fundamentals of the Incident Command System. Well done.
+                  You completed {course.title}. Well done.
                 </p>
                 <Link
                   href="/courses"
@@ -276,9 +303,9 @@ export default function LearnPage({ params }: { params: { id: string } }) {
                 </Link>
               </div>
             )}
-          </main>
+          </section>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

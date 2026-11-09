@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Shield, Leaf, AlertTriangle, Heart, PawPrint, GraduationCap, TreePine, FileText } from "lucide-react";
+import { Search, Shield, Leaf, AlertTriangle, Heart, PawPrint, GraduationCap, TreePine, FileText, Mail } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { services, serviceCategories, type ServiceCategory } from "@/data/services";
@@ -36,11 +36,11 @@ export default function ServicesPage() {
           <div className="section-container text-center">
             <FileText className="mx-auto h-10 w-10 text-emerald-300" />
             <h1 className="mt-4 text-3xl font-extrabold sm:text-4xl">
-              100 Actividades — 100% Efectividad
+              {services.length} Activities — 100% Effectiveness
             </h1>
             <p className="mx-auto mt-3 max-w-2xl text-emerald-100">
-              Nuestra lista completa de servicios especializados en EHSQ, gestión
-              de riesgos, medio ambiente, salud animal, sostenibilidad y más.
+              Our complete list of specialized services across EHSQ, risk
+              management, environment, animal health, sustainability and more.
             </p>
           </div>
         </section>
@@ -52,7 +52,7 @@ export default function ServicesPage() {
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Buscar servicio..."
+                placeholder="Search services..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-10 pr-4 text-sm outline-none transition-colors focus:border-emerald-500"
@@ -93,7 +93,7 @@ export default function ServicesPage() {
 
           {/* Results count */}
           <p className="mt-6 text-sm text-slate-500">
-            {filtered.length} service{filtered.length !== 1 && "s"}
+            {filtered.length} service{filtered.length !== 1 && "s"} found
           </p>
 
           {/* Services list */}
@@ -119,10 +119,11 @@ export default function ServicesPage() {
                   </div>
                   <a
                     href={`/contact?service=${encodeURIComponent(service.title)}`}
-                    className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-[11px] font-bold text-emerald-600 opacity-0 transition-opacity hover:bg-emerald-100 group-hover:opacity-100"
-                    title="Request quote"
+                    className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-[11px] font-bold text-emerald-600 opacity-100 transition-opacity hover:bg-emerald-100 sm:opacity-0 sm:group-hover:opacity-100"
+                    title="Request a quote"
+                    aria-label={`Request a quote for ${service.title}`}
                   >
-                    $
+                    <Mail className="h-3.5 w-3.5" />
                   </a>
                 </motion.div>
               );
@@ -134,7 +135,7 @@ export default function ServicesPage() {
         <section className="border-t border-slate-100 bg-slate-50 py-12">
           <div className="section-container text-center">
             <p className="text-sm text-slate-500">
-              Lista completa de servicios BERS Institute — 100 actividades para 100% de efectividad
+              Complete BERS Institute service list — {services.length} activities for 100% effectiveness
             </p>
           </div>
         </section>

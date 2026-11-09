@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Heart, TreePine, ExternalLink, ImageIcon } from "lucide-react";
+import { Heart, TreePine, ImageIcon } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -39,18 +39,19 @@ export default function DonationsPage() {
               climate resilience in vulnerable communities.
             </p>
             <motion.a
-              href="https://buy.stripe.com/donate"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/contact?service=Donations"
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               className="btn-primary mt-8 inline-flex items-center gap-2 rounded-xl bg-amber-400 px-8 py-4 text-base font-bold text-emerald-900 shadow-xl shadow-amber-400/30 hover:bg-amber-300"
             >
               <TreePine className="h-5 w-5" />
-              Donate Now — Plant a Tree
-              <ExternalLink className="h-4 w-4" />
+              Donate — Plant a Tree
             </motion.a>
+            <p className="mt-4 text-sm text-emerald-100">
+              Online donations are being set up. Write to us and we will arrange your
+              contribution today.
+            </p>
           </div>
         </section>
 
@@ -113,13 +114,11 @@ export default function DonationsPage() {
                 in communities across Colombia and the United States.
               </p>
               <a
-                href="https://buy.stripe.com/donate"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contact?service=Donations"
                 className="btn-primary mt-6 inline-flex items-center gap-2"
               >
                 <Heart className="h-4 w-4" />
-                Make a Donation
+                Contact us to donate
               </a>
             </div>
           </div>
