@@ -7,12 +7,15 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const CONTACT_EMAIL = "yohan.ariza@bersinstitute.org";
-const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+// Activated FormSubmit endpoint. Submissions are delivered to the institute
+// inbox through the "cc" below.
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/69umkhql8x7n@fldubai.com";
 
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", service: "", message: "" });
+  const [honey, setHoney] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -54,6 +57,9 @@ export default function ContactPage() {
           _subject: `New quote request${form.service ? ` — ${form.service}` : ""}`,
           _template: "table",
           _captcha: "false",
+          _cc: CONTACT_EMAIL,
+          _replyto: form.email,
+          _honey: honey,
         }),
       });
 
@@ -77,6 +83,7 @@ export default function ContactPage() {
 
   const reset = () => {
     setForm({ name: "", email: "", phone: "", service: "", message: "" });
+    setHoney("");
     setStatus("idle");
     setErrorMessage("");
   };
@@ -146,6 +153,18 @@ export default function ContactPage() {
                       <textarea rows={5} required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
                         className="mt-1 w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm outline-none focus:border-emerald-500" />
                     </div>
+
+                    {/* Honeypot: hidden from people, catches bots */}
+                    <input
+                      type="text"
+                      name="_honey"
+                      value={honey}
+                      onChange={(e) => setHoney(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="hidden"
+                    />
 
                     {status === "error" && (
                       <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
